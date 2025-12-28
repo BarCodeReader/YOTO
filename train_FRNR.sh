@@ -1,7 +1,7 @@
 #!/bin/bash
 
 python train_FRNR.py \
---root_dir "/media/mike/DATA_MIKE/IQA/YOTO_bak" \
+--root_dir "/your/root/dir" \
 --network "model" \
 --GPU 0 \
 --model_name "FRNR_mix" \
