@@ -1,0 +1,9 @@
+data/datasets/*
+data/*.py
+data/*.txt
+!data/datasets/.gitkeep
+!data/.gitkeep
+models/pretrained/*
+!models/pretrained/.gitkeep
+*.pyc
+output*

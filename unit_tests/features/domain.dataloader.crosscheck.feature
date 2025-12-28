@@ -1,0 +1,23 @@
+Feature: domain.dataloader.crosscheck
+   Scenario Outline: check cross-check function for FR-IQA datasets
+     Given a pseudo config with cross-check mode on
+      When we indicate training dataset as "<dataset>", cross-check dataset as "<cross_check_dataset>" and their detailed info "<data>"
+      Then the outcome for FR-IQA loader under cross-check mode should match pre-defined format
+      And the loaded cross-check dataset GT should match pre-defined score for train dataset: "<GT_score_1>", "<GT_score_23>", "<GT_score_57>", and cross_check dataset: "<GT_score_1c>", "<GT_score_23c>", "<GT_score_57c>", which is the 1, 23, 57th row of label.txt
+     Examples:
+        | dataset  | cross_check_dataset | data  | GT_score_1 | GT_score_23 | GT_score_57 | GT_score_1c | GT_score_23c | GT_score_57c |
+        | live     | csiq                |{"seed":20, "crop_size":224, "txt_path":"./data/live_label.txt", "dis_path":"./data/datasets/LIVE", "ref_path":"./data/datasets/LIVE", "txt_pathc":"./data/csiq_label.txt", "dis_pathc":"./data/datasets/CSIQ/dst_imgs", "ref_pathc":"./data/datasets/CSIQ/src_imgs"}                                                                         | 0.113551 |0.262300 | 0.417662 | 0.061989 |0.489880 | 0.754413 |
+        | csiq     | tid2013             |{"seed":20, "crop_size":224, "txt_path":"./data/csiq_label.txt", "dis_path":"./data/datasets/CSIQ/dst_imgs", "ref_path":"./data/datasets/CSIQ/src_imgs", "txt_pathc":"./data/tid2013_label.txt", "dis_pathc":"./data/datasets/TID2013/distorted_images", "ref_pathc":"./data/datasets/TID2013/reference_images"}                              | 0.061989 |0.489880 | 0.754413 | 5.51429  |5.08333  | 5.86486  |
+        | tid2013  | kadid10k            | {"seed":20, "crop_size":224, "txt_path":"./data/tid2013_label.txt", "dis_path":"./data/datasets/TID2013/distorted_images", "ref_path":"./data/datasets/TID2013/reference_images", "txt_pathc":"./data/kadid10k_label.txt", "dis_pathc":"./data/datasets/KADID10K/distorted_images", "ref_pathc":"./data/datasets/KADID10K/reference_images"} | 5.51429  |5.08333  | 5.86486  | 4.57     |1.57     | 3.7      |
+        | kadid10k | live                | {"seed":20, "crop_size":224, "txt_path":"./data/kadid10k_label.txt", "dis_path":"./data/datasets/KADID10K/distorted_images", "ref_path":"./data/datasets/KADID10K/reference_images", "txt_pathc":"./data/live_label.txt", "dis_pathc":"./data/datasets/LIVE", "ref_pathc":"./data/datasets/LIVE"}                                            | 4.57     |1.57     | 3.7      | 0.113551 |0.262300 | 0.417662 |
+
+   Scenario Outline: check cross-check function for NR-IQA datasets
+     Given a pseudo config with cross-check mode on
+      When we indicate training dataset as "<dataset>", cross-check dataset as "<cross_check_dataset>" and their detailed info "<data>"
+      Then the outcome for NR-IQA loader under cross-check mode should match pre-defined format
+      And the loaded cross-check dataset GT should match pre-defined score for train dataset: "<GT_score_1>", "<GT_score_23>", "<GT_score_57>", and cross_check dataset: "<GT_score_1c>", "<GT_score_23c>", "<GT_score_57c>", which is the 1, 23, 57th row of label.txt
+     Examples:
+        | dataset  | cross_check_dataset | data  | GT_score_1 | GT_score_23 | GT_score_57 | GT_score_1c | GT_score_23c | GT_score_57c |
+        | livec    | livefb              | {"seed":20, "crop_size":224, "txt_path":"./data/LIVEC_label.txt", "dis_path":"./data/datasets/LIVEC/Images", "txt_pathc":"./data/livefb_labels.txt", "dis_pathc":"./data/datasets/LIVEFB/images"}                | 66.3595           |19.75             | 79.4379           | 75.44372347614072 |75.55370958207453 | 72.84853156533667 |
+        | livefb   | koniq10k            | {"seed":20, "crop_size":224, "txt_path":"./data/livefb_labels.txt", "dis_path":"./data/datasets/LIVEFB/images", "txt_pathc":"./data/koniq10k_label.txt", "dis_pathc":"./data/datasets/KONIQ/koniq10k_1024x768"}  | 75.44372347614072 |75.55370958207453 | 72.84853156533667 | 3.82857142857143  |3.07920792079208  | 3.00934579439252  |
+        | koniq10k | livec               | {"seed":20, "crop_size":224, "txt_path":"./data/koniq10k_label.txt", "dis_path":"./data/datasets/KONIQ/koniq10k_1024x768", "txt_pathc":"./data/LIVEC_label.txt", "dis_pathc":"./data/datasets/LIVEC/Images"}     | 3.82857142857143  |3.07920792079208  | 3.00934579439252  | 66.3595           |19.75             | 79.4379           |
